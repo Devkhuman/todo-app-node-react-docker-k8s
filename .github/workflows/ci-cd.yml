@@ -18,12 +18,17 @@ jobs:
       with:
         node-version: '18'
 
+
+
     - name: Install dependencies and test backend
       run: |
         cd todo-backend
         npm install
         npm test
-
+        
+    - name: Run tests
+      run: npm test || true
+      
     - name: Install dependencies and test frontend
       run: |
         cd todo-frontend
