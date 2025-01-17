@@ -1,0 +1,36 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+
+    - name: Install dependencies and test backend
+      run: |
+        cd todo-backend
+        npm install
+        npm test
+
+    - name: Install dependencies and test frontend
+      run: |
+        cd todo-frontend
+        npm install
+        npm test
+
+    - name: Build Docker images
+      run: |
+        docker build -t username/todo-backend ./todo-backend
+        docker build -t username/todo-frontend ./todo-frontend
